@@ -4,7 +4,7 @@ cloudbuild_triggers = {
 
     "push-to-main" = {
         trigger_name                      = "push-to-main"
-        disabled                          = true
+        disabled                          = false
         github_source_url                 = "https://github.com/plosso/docker-compose-tutorial"
         github_repo_owner                 = "plosso"
         github_repo_name                  = "docker-compose-tutorial"
@@ -18,7 +18,7 @@ cloudbuild_triggers = {
     },
     "build-wheel" = {
         trigger_name                      = "build-wheel"
-        disabled                          = true
+        disabled                          = false
         github_source_url                 = "https://github.com/plosso/poetry-tutorial"
         github_repo_owner                 = "plosso"
         github_repo_name                  = "poetry-tutorial"
