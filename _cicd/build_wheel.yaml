@@ -19,23 +19,23 @@ steps:
           fi
         done
   # Install Dependencies
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:50c92ad"
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:efac15f"
     entrypoint: poetry
     args:
       - "install"
   # SETUP POETRY
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:50c92ad"
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:efac15f"
     entrypoint: bash
     args:
       - "poetry config repositories.python us-central1-docker.pkg.dev/cloudbuild-testing-354715/python/"
       - "poetry config http-basic.python oauth2accesstoken $(gcloud auth print-access-token)"
   # Run build wheel
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:50c92ad"
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:efac15f"
     entrypoint: bash
     args:
       - "poetry build -f wheel"
   # Publish package
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:dd4f120"
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:efac15f"
     entrypoint: bash
     args:
       - "poetry build -f wheel"
