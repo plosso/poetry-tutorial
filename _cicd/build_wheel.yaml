@@ -22,7 +22,7 @@ steps:
   - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:efac15f"
     entrypoint: poetry
     args:
-      - "--version"   
+      - "install"   
   # # SETUP POETRY
   # - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:efac15f"
   #   entrypoint: bash
