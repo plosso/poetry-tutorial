@@ -1,0 +1,43 @@
+# References:
+# - https://stackoverflow.com/questions/55905120/how-to-prevent-cloud-build-from-running-builds-in-parallel
+# - https://cloud.google.com/build/docs/samples/cloudbuild-python-yaml
+---
+steps:
+  # Cancel Parallel Builds before Running
+  - id: "Stop Parallel Cloud Build Trigger Runs"
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        on_going_build=($(gcloud builds list --ongoing --format='value(id)' --filter="substitutions.TRIGGER_NAME=$TRIGGER_NAME" | xargs))
+        for (( i=0; i<${#on_going_build[@]}; i++ )); do
+          if [ "$i" -gt "0" ]; then # skip current
+            echo "Cancelling build ${on_going_build[i]}"
+
+            gcloud builds cancel ${on_going_build[i]}
+          fi
+        done
+  # Install Dependencies
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:a38942c"
+    entrypoint: poetry
+    args:
+      - "install"
+  # SETUP POETRY
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:a38942c"
+    entrypoint: bash
+    args:
+      - "poetry config repositories.python us-central1-docker.pkg.dev/cloudbuild-testing-354715//python/"
+      - "poetry config http-basic.python oauth2accesstoken $(gcloud auth print-access-token)"
+  # Run build wheel
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:a38942c"
+    entrypoint: bash
+    args:
+      - "poetry build -f wheel"
+  # Publish package
+  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:a38942c"
+    entrypoint: bash
+    args:
+      - "poetry build -f wheel"
+options:
+  logging: "CLOUD_LOGGING_ONLY"
