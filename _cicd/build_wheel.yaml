@@ -27,7 +27,7 @@ steps:
   - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
     entrypoint: bash
     args:
-      - "poetry config repositories.python us-central1-docker.pkg.dev/cloudbuild-testing-354715/python/"
+      - "poetry config repositories.python us-central1-docker.pkg.dev/cloudbuild-testing-354715/python/python"
       - "poetry config http-basic.python oauth2accesstoken $(gcloud auth print-access-token)"
   # Run build wheel
   - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
