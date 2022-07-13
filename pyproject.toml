@@ -2,7 +2,7 @@
 name = "poet"
 version = "0.1.0"
 description = "Testing poetry in gcp"
-authors = [Patrick Losso <patrick.losso@gmail.com>]
+authors = ["Patrick Losso <patrick.losso@gmail.com>"]
 
 packages = [
     { include = "poet" }
