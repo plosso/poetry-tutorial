@@ -47,4 +47,4 @@ steps:
         poetry config list;
         poetry publish -r python
 options:
-  loggig: "CLOUD_LOGGING_ONLY"
+  logging: "CLOUD_LOGGING_ONLY"
