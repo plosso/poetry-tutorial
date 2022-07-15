@@ -24,27 +24,29 @@ steps:
     args:
       - "install"   
   # SETUP POETRY
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
-    entrypoint: bash
-    args:
-      - "-c"
-      - |
-        poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
+  # - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
+  #   entrypoint: bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
   # Run build wheel
   - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
     entrypoint: bash
     args:
       - "-c"
       - |
-        poetry config list;
+        poetry config --list;
         poetry build -f wheel
-  # Publish package
+  #Publish package
   - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
     entrypoint: bash
     args:
       - "-c"
       - |
-        poetry config list;
+        poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
+        poetry config http-basic.python oauth2accesstoken $(glcloud auth print-access-token)
+        poetry config --list;
         poetry publish -r python
 options:
   logging: "CLOUD_LOGGING_ONLY"
