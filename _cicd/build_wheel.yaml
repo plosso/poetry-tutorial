@@ -45,7 +45,7 @@ steps:
       - "-c"
       - |
         poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
-        poetry config http-basic.gcp oauth2accesstoken "$(gcloud auth print-access-token)"
+        poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
         poetry config --list;
         poetry publish -r python
 options:
