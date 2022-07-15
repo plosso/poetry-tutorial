@@ -2,7 +2,7 @@ gcp_project_id    = "cloudbuild-testing-354715"
 
 cloudbuild_triggers = {
 
-    "push-to-main" = {
+    "main-merge" = {
         trigger_name                      = "push-to-main"
         disabled                          = false
         github_source_url                 = "https://github.com/plosso/docker-compose-tutorial"
@@ -16,8 +16,8 @@ cloudbuild_triggers = {
         cloudbuild_yaml_path              = "_cicd/push_cloudbuild.yaml"
         tags                              = ["docker"]
     },
-    "build-wheel" = {
-        trigger_name                      = "build-wheel"
+    "build-wheel-pkg" = {
+        trigger_name                      = "build-wheel-pkg"
         disabled                          = false
         github_source_url                 = "https://github.com/plosso/poetry-tutorial"
         github_repo_owner                 = "plosso"
