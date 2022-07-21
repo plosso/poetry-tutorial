@@ -51,6 +51,13 @@ steps:
         echo "Poetry version: $packageVersion"  
         repoPoetryVersion=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="list(VERSION)" --sort-by="~UPDATE_TIME")
         echo $repoPoetryVersion
+        if [[ $repoPoetryVersion =~ $packageVersion ]]
+        then
+	        echo "Version already exists in repo"
+          exit 1
+        else
+	        echo "Version does not yet exist in repo"                                        
+        fi
         poetry publish -r python
 options:
   logging: "CLOUD_LOGGING_ONLY"
