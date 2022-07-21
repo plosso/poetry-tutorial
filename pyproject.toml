@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poet"
-version = "0.1.3"
+version = "0.1.3.0"
 description = "Testing poetry in gcp"
 authors = ["Patrick Losso <patrick.losso@gmail.com>"]
 
