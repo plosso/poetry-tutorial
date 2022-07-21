@@ -53,10 +53,10 @@ steps:
         echo $repoPoetryVersion
         if [[ $repoPoetryVersion =~ $packageVersion ]]
         then
-	        echo "Version already exists in repo"
+          echo "Version already exists in repo"
           exit 1
         else
-	        echo "Version does not yet exist in repo"                                        
+          echo "Version does not yet exist in repo"
         fi
         poetry publish -r python
 options:
