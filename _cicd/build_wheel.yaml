@@ -38,18 +38,6 @@ steps:
       - |
         poetry config --list;
         poetry build -f wheel
-  #Check version
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
-    entrypoint: bash
-    args:
-      - "-c"
-      - |
-        poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
-        poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
-        packageVersion=$(poetry version | awk '{print $2}')
-        echo $packageVersion  
-        repoPoetryVersion=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="list(VERSION)" --sort-by="~UPDATE_TIME")
-        echo $repoPoetryVersion
   #Publish package
   - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
     entrypoint: bash
@@ -59,6 +47,10 @@ steps:
         poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
         poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
         poetry config --list;
+        packageVersion=$(poetry version | awk '{print $2}')
+        echo $packageVersion  
+        repoPoetryVersion=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="list(VERSION)" --sort-by="~UPDATE_TIME")
+        echo $repoPoetryVersion
         poetry publish -r python
 options:
   logging: "CLOUD_LOGGING_ONLY"
