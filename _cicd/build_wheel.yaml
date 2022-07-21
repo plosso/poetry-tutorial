@@ -51,7 +51,7 @@ steps:
         echo "Poetry version: $packageVersion"  
         repoPoetryVersion=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="list(VERSION)" --sort-by="~UPDATE_TIME")
         echo $repoPoetryVersion
-        if [[ $repoPoetryVersion =~ $packageVersion ]]
+        if [[ $repoPoetryVersion =~ ^$packageVersion$ ]]
         then
           echo "Version already exists in repo"
           exit 1
