@@ -48,7 +48,7 @@ steps:
         poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
         poetry config --list;
         packageVersion=$(poetry version | awk '{print $2}')
-        echo $packageVersion  
+        echo "Poetry version: $packageVersion  
         repoPoetryVersion=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="list(VERSION)" --sort-by="~UPDATE_TIME")
         echo $repoPoetryVersion
         poetry publish -r python
