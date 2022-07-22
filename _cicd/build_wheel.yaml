@@ -54,7 +54,7 @@ steps:
           echo "Version already exists in repo"
           exit 1
         else
-          echo "Version does not yet exist in repo"
+          echo "Publishing package version $packageVersion to repository"
           poetry publish -r python
         fi
         
