@@ -49,7 +49,7 @@ steps:
         poetry config --list;
         packageVersion=$(poetry version | awk '{print $2}')
         echo "Your pyproject.toml version: $packageVersion"  
-        if if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 | grep $packageVersion;
+        if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 | grep $packageVersion;
         then
           echo "Version already exists in repo"
           exit 1
