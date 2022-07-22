@@ -48,10 +48,8 @@ steps:
         poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
         poetry config --list;
         packageVersion=$(poetry version | awk '{print $2}')
-        echo "Poetry version: $packageVersion"  
-        repoPoetryVersion=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="list(VERSION)" --sort-by="~UPDATE_TIME")
-        echo $repoPoetryVersion
-        if [[ repoPoetryVersion =~ ^$packageVersion~ ]]
+        echo "Your pyproject.toml version: $packageVersion"  
+        if if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 | grep $packageVersion;
         then
           echo "Version already exists in repo"
           exit 1
