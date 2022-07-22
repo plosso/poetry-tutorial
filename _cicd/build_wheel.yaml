@@ -57,7 +57,8 @@ steps:
           exit 1
         else
           echo "Version does not yet exist in repo"
+          poetry publish -r python
         fi
-        poetry publish -r python
+        
 options:
   logging: "CLOUD_LOGGING_ONLY"
