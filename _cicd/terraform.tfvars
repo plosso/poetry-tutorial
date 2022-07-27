@@ -1,4 +1,5 @@
 gcp_project_id    = "cloudbuild-testing-354715"
+region            ="us-central1"  
 
 cloudbuild_triggers = {
 
