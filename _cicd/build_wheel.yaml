@@ -48,10 +48,13 @@ steps:
         poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
         poetry config --list;
         packageVersion=$(poetry version | awk '{print $2}')
-        echo "Your pyproject.toml version: $packageVersion"  
-        if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 | grep $packageVersion;
+        echo "Your pyproject.toml version: $packageVersion"
+        versionRegex="^${packageVersion}$"
+        echo "Your regex: $versionRegex"  
+        if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)" | grep "$versionRegex";
         then
           echo "Version already exists in repo"
+          echo "When ready to publish, bump your version"
           exit 1
         else
           echo "Publishing package version $packageVersion to repository"
