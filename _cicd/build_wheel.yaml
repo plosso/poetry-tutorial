@@ -51,7 +51,7 @@ steps:
         echo "Your pyproject.toml version: $packageVersion"
         versionRegex="^${packageVersion}$"
         echo "Your regex: $versionRegex"  
-        if gcloud artifacts versions list --package=poet --repository=python --location=$LOCATION --format="csv(VERSION)" | grep "$versionRegex";
+        if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)" | grep "$versionRegex";
         then
           echo "Version already exists in repo"
           echo "When ready to publish, bump your version"
