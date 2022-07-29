@@ -47,6 +47,19 @@ steps:
         poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
         poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
         poetry config --list;
-        poetry publish -r python
+        packageVersion=$(poetry version | awk '{print $2}')
+        echo "Your pyproject.toml version: $packageVersion"
+        versionRegex="^${packageVersion}$"
+        echo "Your regex: $versionRegex"  
+        if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)" | grep "$versionRegex";
+        then
+          echo "Version already exists in repo"
+          echo "When ready to publish, bump your version"
+          exit 1
+        else
+          echo "Publishing package version $packageVersion to repository"
+          poetry publish -r python
+        fi
+        
 options:
   logging: "CLOUD_LOGGING_ONLY"

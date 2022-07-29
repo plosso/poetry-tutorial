@@ -1,20 +1,20 @@
 #!/bin/bash
-#  if ./check_version.sh | grep 0.1.3; then 
-# echo "matched"
-# else
-# echo "not matched"
-# fi
 
-echo packageVersion=$(poetry version) | awk '{print $2}'     
+packageVersion=$(poetry version | awk '{print $2}')    
+echo "Your pyproject.toml version: $packageVersion"
 
+versionRegex="^${packageVersion}$"
+echo "Your regex: $versionRegex"
 
-#echo repoPoetryVersionTmp=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)")
-# repoPoetryVersion=$(echo $repoPoetryVersionTmp | awk '{print $2}')
-# echo $repoPoetryVersion 
+repoVersionList=$(gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)")
+echo "Version in repository: $repoVersionList"
  
-# if [[ $poetryVersion -eq $repoPoetryVersion ]]
-# then
-# 	echo "Version already exists in repo"
-# else
-# 	echo "Version does not yet exist in repo"                                        
-# fi
+if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)" | grep "$versionRegex"; 
+
+#if [[ "$repoVersionList" =~ $versionRegex ]]
+then
+	echo "Version already exists in repo"
+    #exit 1
+else
+	echo "Version does not yet exist in repo"                                       
+fi
