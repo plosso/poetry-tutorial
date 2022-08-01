@@ -1,4 +1,4 @@
-resource "google_cloudbuild_trigge" "cloudbuild_trigger" {
+resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
   name        = var.trigger_name
   project     = var.gcp_project_id
   description = local.description
