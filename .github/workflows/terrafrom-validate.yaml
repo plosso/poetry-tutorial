@@ -19,15 +19,13 @@ jobs:
     - name: Terraform fmt
       id: fmt
       run: terraform fmt -check
-      target: _cicd/cloudbuild
       continue-on-error: true
 
     - name: Terraform Init
       id: init
       run: terraform init
-      target: _cicd/cloudbuild
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
-      target: _cicd/cloudbuild
+      
