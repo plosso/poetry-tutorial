@@ -11,12 +11,12 @@ resource "google_cloudbuild_trigger" "cloudbuild_trigger" {
     # revision  = "refs/heads/${var.trunk_branch_name}"  # Unspecified to use Triggered Branch
     repo_type = "GITHUB"
   }
-  
+
   github {
-    owner  = var.github_repo_owner
-    name   = var.github_repo_name
+    owner = var.github_repo_owner
+    name  = var.github_repo_name
     push {
-      branch  = var.push_branch_name_regex
+      branch = var.push_branch_name_regex
     }
   }
 
