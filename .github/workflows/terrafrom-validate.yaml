@@ -3,6 +3,10 @@ name: Terraform Validation
 on:
   workflow_dispatch:
 
+on: 
+  pull_request:
+    types: [opened, reopened]
+
 defaults:
   run:
     working-directory: _cicd/cloudbuild
