@@ -1,0 +1,21 @@
+name: Terraform Validation
+
+on:
+  workflow_dispatch:
+
+steps:
+- uses: actions/checkout@v2
+- uses: hashicorp/setup-terraform@v2
+
+- name: Terraform fmt
+  id: fmt
+  run: terraform fmt -check
+  continue-on-error: true
+
+- name: Terraform Init
+  id: init
+  run: terraform init
+
+- name: Terraform Validate
+  id: validate
+  run: terraform validate -no-color
