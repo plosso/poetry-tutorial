@@ -3,6 +3,10 @@ name: Terraform Validation
 on:
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: _cicd/cloudbuild
+
 jobs:
   docker:
     runs-on: ubuntu-latest
