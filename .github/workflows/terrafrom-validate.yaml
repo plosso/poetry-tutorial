@@ -3,19 +3,24 @@ name: Terraform Validation
 on:
   workflow_dispatch:
 
-steps:
-- uses: actions/checkout@v2
-- uses: hashicorp/setup-terraform@v2
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    name: tf-validate
 
-- name: Terraform fmt
-  id: fmt
-  run: terraform fmt -check
-  continue-on-error: true
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v2
 
-- name: Terraform Init
-  id: init
-  run: terraform init
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+      continue-on-error: true
 
-- name: Terraform Validate
-  id: validate
-  run: terraform validate -no-color
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
