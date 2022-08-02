@@ -1,7 +1,9 @@
 name: Terraform Validation
 
-on:
-  workflow_dispatch:
+on: 
+  pull_request:
+    types: [opened, reopened]
+  push:  
 
 defaults:
   run:
