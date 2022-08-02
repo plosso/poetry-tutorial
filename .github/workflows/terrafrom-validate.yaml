@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    working-directory: _cicd/cloudbuild
+    working-directory: _cicd
 
 jobs:
   docker:
