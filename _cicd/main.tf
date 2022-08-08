@@ -18,14 +18,14 @@
 # }
 
 
-
 module "cloudbuild_triggers" {
   #source                            = "github.com/plosso/terraform-gcp-cloudbuild//modules/cloudbuild-triggers"
   source                            = "git::git@github.com:plosso/terraform-gcp-cloudbuild.git//modules/cloudbuild-trigger"
   for_each                          = var.cloudbuild_triggers
 
   gcp_project_id                    = var.gcp_project_id
-  region                            = var.region
+  region                            = var.gcp_region
+ 
   github_repo_owner                 = each.value.github_repo_owner
   github_repo_name                  = each.value.github_repo_name
   github_source_url                 = each.value.github_source_url
