@@ -25,6 +25,7 @@ module "cloudbuild_triggers" {
 
   gcp_project_id                    = var.gcp_project_id
   region                            = var.gcp_region
+  account_id                        = var.gcp_account_id
  
   github_repo_owner                 = each.value.github_repo_owner
   github_repo_name                  = each.value.github_repo_name
@@ -32,6 +33,7 @@ module "cloudbuild_triggers" {
   trigger_name                      = each.value.trigger_name
   disabled                          = each.value.disabled
   push_branch_name_regex            = each.value.push_branch_name_regex
+  push_tag_regex                    = each.value.push_tag_regex
   artifact_registry_gcp_project_id  = each.value.artifact_registry_gcp_project_id
   custom_description                = each.value.custom_description
   cloudbuild_yaml_path              = each.value.cloudbuild_yaml_path

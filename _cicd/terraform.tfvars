@@ -1,8 +1,8 @@
 gcp_project_id    = "cloudbuild-testing-354715"
 gcp_region        = "us-central1"  
+gcp_account_id    = "cloudbuild-user-test"
 
 cloudbuild_triggers = {
-
     "main-merge" = {
         trigger_name                            = "push-to-main"
         disabled                                = false
@@ -21,12 +21,10 @@ cloudbuild_triggers = {
         github_source_url                       = "https://github.com/plosso/poetry-tutorial"
         github_repo_owner                       = "plosso"
         github_repo_name                        = "poetry-tutorial"
-        github_push_branch_name_regex           = "main"
+        push_tag_regex                          = ".*"
         artifact_registry_gcp_project_id        = "cloudbuild-testing-354715"
-        custom_description                      = "Cloudbuild run for building Pythan wheel trigger"
+        custom_description                      = "Cloudbuild run for building Python wheel trigger"
         cloudbuild_yaml_path                    = "_cicd/build_wheel.yaml"
         tags                                    = ["python"]
     }
-
-
 }
