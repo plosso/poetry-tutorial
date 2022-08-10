@@ -1,0 +1,42 @@
+---
+steps:
+  # Cancel Parallel Builds before Running
+  - id: "Stop Parallel Cloud Build Trigger Runs"
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        on_going_build=($(gcloud builds list --ongoing --format='value(id)' --filter="substitutions.TRIGGER_NAME=$TRIGGER_NAME" | xargs))
+        for (( i=0; i<${#on_going_build[@]}; i++ )); do
+          if [ "$i" -gt "0" ]; then # skip current
+            echo "Cancelling build ${on_going_build[i]}"
+
+            gcloud builds cancel ${on_going_build[i]}
+          fi
+        done
+  # Fix Config
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
+    entrypoint: "rm"
+    args:
+      - "poetry.toml"
+  # Install Dependencies
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
+    entrypoint: poetry
+    args:
+      - "install"
+  # Run pytest
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
+    entrypoint: poetry
+    args:
+      - "run"
+      - "pytest"
+  # Run flake8
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
+    entrypoint: poetry
+    args:
+      - "run"
+      - "flake8"
+      - "./"
+options:
+  logging: "CLOUD_LOGGING_ONLY"

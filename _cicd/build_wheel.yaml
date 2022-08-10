@@ -18,48 +18,43 @@ steps:
             gcloud builds cancel ${on_going_build[i]}
           fi
         done
+  # Fix Config
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
+    entrypoint: "rm"
+    args:
+      - "poetry.toml"
   # Install Dependencies
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
     entrypoint: poetry
     args:
-      - "install"   
-  # SETUP POETRY
-  # - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
-  #   entrypoint: bash
-  #   args:
-  #     - "-c"
-  #     - |
-  #       poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
-  # Run build wheel
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
+      - "install"
+  # Build Pkg
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
     entrypoint: bash
     args:
       - "-c"
       - |
-        poetry config --list;
-        poetry build -f wheel
-  #Publish package
-  - name: "us-central1-docker.pkg.dev/cloudbuild-testing-354715/docker/docker:6b76af5"
+        poetry build;
+  - name: "us-east1-docker.pkg.dev/engineering-artifacts-dev/docker/python-base-38:latest"
     entrypoint: bash
     args:
       - "-c"
       - |
-        poetry config repositories.python https://us-central1-python.pkg.dev/cloudbuild-testing-354715/python/
-        poetry config http-basic.python oauth2accesstoken "$(gcloud auth print-access-token)"
+        poetry config repositories.python https://us-east1-python.pkg.dev/devops-poc-328820/python/;
+        poetry config http-basic.python oauth2accesstoken $(gcloud auth application-default print-access-token);
         poetry config --list;
         packageVersion=$(poetry version | awk '{print $2}')
         echo "Your pyproject.toml version: $packageVersion"
         versionRegex="^${packageVersion}$"
-        echo "Your regex: $versionRegex"  
-        if gcloud artifacts versions list --package=poet --repository=python --location=us-central1 --format="csv(VERSION)" | grep "$versionRegex";
+        echo "Your regex: $versionRegex"
+        if gcloud artifacts versions list --project=devops-poc-328820 --package=poetry --repository=python --location=us-east1 --format="csv(VERSION)" | grep "$versionRegex"
         then
-          echo "Version already exists in repo"
-          echo "When ready to publish, bump your version"
+          echo "Version already exists in repo."
+          echo "When ready to publish, bump version in pyproject.toml and about.py"
           exit 1
         else
-          echo "Publishing package version $packageVersion to repository"
-          poetry publish -r python
+          echo "publishing package version $packageVersion to repository."
+          poetry publish -r python;
         fi
-        
 options:
   logging: "CLOUD_LOGGING_ONLY"
