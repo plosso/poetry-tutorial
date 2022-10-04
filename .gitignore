@@ -3,3 +3,6 @@
 main.tfplan
 terraform.tfstate*
 poetry.lock
+ .DS_Store
+ *.svg
+ tfplan*
