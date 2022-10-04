@@ -20,6 +20,19 @@ ARG DEBIAN_FRONTEND="noninteractive"
 ENV FVCORE_CACHE="/tmp"
 
 # Allow statements and log messages to immediately appear in the Cloud Run logs
+
+
+
+
+
+
+
+
+
+
+
+
+
 ENV PYTHONUNBUFFERED=TRUE
 
 # Development packages, and setting python3 -> python
