@@ -3,3 +3,6 @@
 main.tfplan
 terraform.tfstate*
 poetry.lock
+
+megalinter-reports/
+report/
